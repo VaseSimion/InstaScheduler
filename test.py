@@ -1,6 +1,8 @@
 import requests
 import json
 import Config as Cfg
+import base64
+import requests
 
 
 def fb_test():
@@ -20,8 +22,8 @@ def fb_test():
     print(basic_insight)
 
     upload = dict()
-    upload['image_url'] = "https://i.postimg.cc/Hxr0mXYd/DSC04936.jpg"
-    upload['caption'] = "This just might be it!"
+    upload['image_url'] = "https://i.ibb.co/XsGYzHY/DSC04951.jpg"
+    upload['caption'] = "The perfect caption to the picure I want"
     upload['access_token'] = params['access_token']
 
     url = params['endpoint_base'] + params['instagram_account_id'] +"/media"
@@ -38,4 +40,16 @@ def fb_test():
     print(response)
 
 
+def image_test():
+    params = Cfg.get_parameters("test")
+    key = params['imgbb_key']
+    image_path = "DSC04389-2.jpg"
 
+    with open(image_path, "rb") as file:
+        url = "https://api.imgbb.com/1/upload"
+        payload = {
+            "key": key,
+            "image": base64.b64encode(file.read()),
+        }
+        res = requests.post(url, payload)
+        return res.json()['data']['url']
