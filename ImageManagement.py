@@ -45,11 +45,42 @@ def check_if_valid_ratio(image_location):
 
 
 def generate_image_caption(image_path):
-    caption = "Something that has to be created using the path " + image_path
+    adjective = ["Awesome ", "Amazing ", "Excellent ", "Stunning ", "Cool ", "Lovely ", "Wonderful ", "Superb ",
+                 "Spectacular ", "Great ", "Fantastic ", "Nice ", "Impressive ", "Fabulous ", "Splendid ",
+                 "Captivating ", "Formidable ", "Enchanting "]
+
+    wow_introduction = ["What a ", "Love this ", "Daaaamn, ", "", "", "", "", "", "", "", "", "", ""]
+
+    object = ["image", "photo", "shot", "work", "picture", "frame", "snapshot", "composition", "capture", "scene"]
+
+    congrats = [" Congrats!", " Congratulations!", " Good job!", " Well taken!", "", "", "", "", "", "", "", "", ""]
+
+    sentence_start = ["The ", "Looking back at the ", "Remembering the ", "This picture reminds me of the ",
+                      "We took some great pictures back in the ", "Thinking of the ", "It was one "]
+
+    purpose = ["trip", "holiday", "excursion", "adventure", "vist"]
+
+    nostalgia = [" We can't wait to go back there!", "It brings me back!", "Hope we get to revisit soon!"]
+
+    hashtags = "\n\n\n\n#sony #sonyalpha #travel #citybreak #love #instagood #photooftheday #picoftheday" \
+               "#beautiful #happy #cute #photography #nature #instadaily"
+
+    location = image_path.split("\\")[-2]
+    caption = random.choice(sentence_start) + random.choice(adjective).lower() + random.choice(purpose) + \
+              " we had in " + location + ".... " + random.choice(nostalgia) + hashtags
     return caption
 
 
 def get_image_path(parent_folder):
-    files = os.listdir(parent_folder)
+    dir_list = os.listdir(parent_folder)
+    subfolder = parent_folder + "\\" + random.choice(dir_list)
+    file_list = os.listdir(subfolder)
+    return subfolder + "\\" + random.choice(file_list)
 
-    return random.choice(list(files))
+
+
+if __name__ == "__main__":
+    photo_folder = "D:\\Exported photos\\Instagram"
+    image_location = get_image_path(photo_folder)
+    print(generate_image_caption(image_location))
+

@@ -1,19 +1,27 @@
 import ImageManagement as Im
 import GraphApiUses as Gau
-import random
+import os
 
 
 def upload_picture_on_second_account():
-    try:
+    response_code = 400
+    error_count = 0
+    print("\n*******************     New run happened    *******************")
+
+    while response_code != 200 and error_count < 10:
         photo_folder = "D:\\Exported photos\\Instagram"
-        print("\n*******************     New run happened    *******************")
-        image_location = photo_folder + "\\" + Im.get_image_path(photo_folder)
-        while not Im.check_if_valid_ratio(image_location):
-            image_location = photo_folder + "\\" + Im.get_image_path(photo_folder)
-        link = Im.img_bb_image_upload(image_location)
-        print("Image is here:", link)
-        caption = random.choice(["This is part of the bigger picture", "I am not a bot uploading random photos", "69"])
-        response = Gau.image_upload(link, caption, main_account=False)
-        print(response)
-    except:
-        print("Some error happened")
+        image_location = Im.get_image_path(photo_folder)
+        try:
+            while not Im.check_if_valid_ratio(image_location):
+                image_location = Im.get_image_path(photo_folder)
+            link = Im.img_bb_image_upload(image_location)
+            print("Image is here:", link)
+            caption = Im.generate_image_caption(image_location)
+            response = Gau.image_upload(link, caption, main_account=False)
+            response_code = response.status_code
+        except:
+            error_count += 1
+            print("Some error happened, error count is ", error_count)
+        if response_code == 200:
+            print("Photo has been uploaded successfully!")
+            os.remove(image_location)

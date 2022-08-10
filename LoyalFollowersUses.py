@@ -39,7 +39,7 @@ def simp_main_account(cl: Client, target):
 def upload_story(cl: Client):
     notabot = cl.user_info_by_username('simion.vase.not.a.bot')
     photo_folder = "D:\\Exported photos\\Instagram"
-    image_location = photo_folder + "\\" + Im.get_image_path(photo_folder)
+    image_location = Im.get_image_path(photo_folder)
     post_story = True
     if post_story:
         cl.photo_upload_to_story(
