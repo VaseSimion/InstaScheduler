@@ -26,8 +26,8 @@ def manage_image_size(image_location):
     original_image = Image.open(image_location)
     width, height = original_image.size
     if image_size > 6000000:
-        resize_factor = math.sqrt(6000000/image_size)
-        new_image = original_image.resize((int(width*resize_factor), int(height*resize_factor)))
+        resize_factor = math.sqrt(6000000 / image_size)
+        new_image = original_image.resize((int(width * resize_factor), int(height * resize_factor)))
         new_image.save(image_location)
         print("Image has been resized")
     else:
@@ -37,7 +37,7 @@ def manage_image_size(image_location):
 def check_if_valid_ratio(image_location):
     original_image = Image.open(image_location)
     width, height = original_image.size
-    if (0.8 < (height/width) < 1.91) or (0.8 < (width/height) < 1.91):
+    if (0.8 < (height / width) < 1.91) or (0.8 < (width / height) < 1.91):
         return True
     else:
         print("Image had ratios too off ", image_location)
@@ -71,16 +71,35 @@ def generate_image_caption(image_path):
     return caption
 
 
+def generate_simp_caption():
+    adjective = ["Awesome ", "Amazing ", "Excellent ", "Stunning ", "Cool ", "Lovely ", "Wonderful ", "Superb ",
+                 "Spectacular ", "Great ", "Fantastic ", "Nice ", "Impressive ", "Fabulous ", "Splendid ",
+                 "Captivating ", "Formidable ", "Enchanting "]
+
+    wow_introduction = ["What a ", "Love this ", "Daaaamn, ", "", "", "", "", "", "", "", "", "", ""]
+
+    objective = ["image", "photo", "shot", "work", "picture", "frame", "snapshot", "composition", "capture", "scene"]
+
+    congrats = [" Congrats!", " Congratulations!", " Good job!", " Well taken!", "Love you",
+                "", "", "", "", "", "", "", ""]
+
+    caption = random.choice(wow_introduction) + random.choice(adjective) + random.choice(objective) + " Simion!" + \
+              random.choice(congrats)
+
+    return caption
+
+
 def get_image_path(parent_folder):
     dir_list = os.listdir(parent_folder)
     subfolder = parent_folder + "\\" + random.choice(dir_list)
+    if len(os.listdir(subfolder)) == 0:
+        os.rmdir(subfolder)
+        subfolder = parent_folder + "\\" + random.choice(dir_list)
     file_list = os.listdir(subfolder)
     return subfolder + "\\" + random.choice(file_list)
-
 
 
 if __name__ == "__main__":
     photo_folder = "D:\\Exported photos\\Instagram"
     image_location = get_image_path(photo_folder)
     print(generate_image_caption(image_location))
-

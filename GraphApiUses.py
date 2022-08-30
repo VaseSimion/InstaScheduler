@@ -1,4 +1,5 @@
 import json
+import time
 import Config as Cfg
 import requests
 
@@ -17,7 +18,6 @@ def image_upload(image_link, image_caption, main_account=False):
 
     url = params['endpoint_base'] + params['instagram_account_id'] + "/media"
     creation_id = requests.post(url, upload)
-    print(creation_id.json())
     container_id = creation_id.json()['id']
 
     # Upload the container
@@ -61,6 +61,25 @@ def get_insights(main_account=False):
     return json.loads(data.content)
 
 
-if __name__ == "__main__":
-    get_insights(False)
+def get_used_quota(main_account=False):
+    if main_account:
+        params = Cfg.get_parameters("main")
+    else:
+        params = Cfg.get_parameters("test_account")
+    # define url
+    url = params['endpoint_base'] + params['instagram_account_id'] + "/" + "content_publishing_limit"
 
+    # define parameters
+    endpoint_params = dict()
+    endpoint_params['fields'] = 'quota_usage,rate_limit_settings'
+    endpoint_params['access_token'] = params['access_token']
+    endpoint_params['since'] = str(int(time.time())-86300)
+
+    # Requests Data
+    data = requests.get(url, endpoint_params)
+    print("The daily quota usage is at ", data.json()['data'][0]['quota_usage'])
+    return data.json()['data'][0]['quota_usage']
+
+
+if __name__ == "__main__":
+    print(get_used_quota(False))
