@@ -71,7 +71,7 @@ def generate_image_caption(image_path):
     return caption
 
 
-def generate_simp_caption():
+def generate_simp_comment():
     adjective = ["Awesome ", "Amazing ", "Excellent ", "Stunning ", "Cool ", "Lovely ", "Wonderful ", "Superb ",
                  "Spectacular ", "Great ", "Fantastic ", "Nice ", "Impressive ", "Fabulous ", "Splendid ",
                  "Captivating ", "Formidable ", "Enchanting "]

@@ -10,6 +10,9 @@ def login_local(user):
     if user == "basic_bot":
         USERNAME = params['userrc']
         PASSWORD = params['passrc']
+    elif user == "other_bot":
+        USERNAME = params['usernsb']
+        PASSWORD = params['passnsb']
     else:
         USERNAME = params['userusc']
         PASSWORD = params['passusc']
@@ -17,36 +20,36 @@ def login_local(user):
     cl = Client()
 
     try:
-        cl.load_settings(Path("/../Logins/" + user + ".json"))
+        cl.load_settings(Path("/home/vase/TheInstaScript/InstaScheduler/Logins/" + user + ".json"))
     except:
         pass
 
     cl.login(USERNAME, PASSWORD)
-    print(cl.get_timeline_feed())  # check session
-    cl.dump_settings(Path("/Logins/" + user + ".json"))
+    cl.dump_settings(Path("/home/vase/TheInstaScript/InstaScheduler/Logins/" + user + ".json"))
     return cl
 
 
 def simp_main_account(user, target):
-    comment_text = Im.generate_simp_caption()
+    comment_text = Im.generate_simp_comment()
     cl = login_local(user)
     try:
         if target == "main":
             for element in cl.user_medias(2373550137, amount=1):
                 id_last_post = element.dict()['id']
-                print(id_last_post)
+                # print(id_last_post)
                 comment = cl.media_comment(id_last_post, comment_text)
-                print(comment.dict())
+                # print(comment.dict())
                 cl.media_like(media_id=id_last_post)
         else:
             for element in cl.user_medias(54354195189, amount=1):
                 id_last_post = element.dict()['id']
-                print(id_last_post)
+                # print(id_last_post)
                 comment = cl.media_comment(id_last_post, comment_text)
-                print(comment.dict())
+                # print(comment.dict())
                 cl.media_like(media_id=id_last_post)
+        print("Comment succesfuly uploaded, from", user)
     except:
-        print("Some error happened!")
+        print("Some error happened!", user)
 
 
 def upload_story(user):
