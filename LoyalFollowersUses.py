@@ -3,6 +3,8 @@ from instagrapi.types import StoryMention, StoryMedia, StoryLink, StoryHashtag
 import ImageManagement as Im
 import Config as Cfg
 from pathlib import Path
+import os
+import random
 
 
 def login_local(user):
@@ -68,6 +70,24 @@ def upload_story(user):
                 links=[StoryLink(webUri='https://www.youtube.com/watch?v=CQRy_ygDF4o&list=RDtYdbcwTb8Es&index=13')]
                 #hashtags=[StoryHashtag(hashtag="#Boss", x=0.23, y=0.32, width=0.5, height=0.22)]
             )
+    except:
+        print("Something was not right")
+
+
+def upload_photo(user, folder):
+    cl = login_local(user)
+    try:
+        subfolder = "/home/vase/Pictures/" + folder
+        file_name = random.choice(os.listdir(subfolder))
+        image_location = subfolder + "/" + file_name
+
+        cl.photo_upload(
+            image_location,
+            "Lovely picture made by " + file_name.split("-")[0].title() + " " + file_name.split("-")[1].title() +
+            ". Interested in improving your photography skill? Check out @simion.vase. #photography, #nature"
+            # usertags = [Usertag(user=adw0rd, x=0.5, y=0.5)],
+            # location = Location(name='Russia, Saint-Petersburg', lat=59.96, lng=30.29)
+        )
     except:
         print("Something was not right")
 
