@@ -3,8 +3,9 @@ from instagrapi.types import StoryMention, StoryMedia, StoryLink, StoryHashtag
 import ImageManagement as Im
 import Config as Cfg
 from pathlib import Path
-import os
+import sys
 import random
+import os
 
 
 def login_local(user):
@@ -12,12 +13,12 @@ def login_local(user):
     if user == "basic_bot":
         USERNAME = params['userrc']
         PASSWORD = params['passrc']
-    elif user == "other_bot":
+    elif user == "nusuntbot":
         USERNAME = params['usernsb']
         PASSWORD = params['passnsb']
     else:
-        USERNAME = params['userusc']
-        PASSWORD = params['passusc']
+        USERNAME = params['userlp']
+        PASSWORD = params['passlp']
 
     cl = Client()
 
@@ -93,4 +94,4 @@ def upload_photo(user, folder):
 
 
 if __name__ == "__main__":
-    simp_main_account("basic_bot", "main")
+    pass
