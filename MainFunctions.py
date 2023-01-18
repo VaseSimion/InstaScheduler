@@ -10,7 +10,7 @@ def upload_picture_on_account_using_api(main_account_used=False):
     print("\n*******************     New run happened    *******************")
 
     while True:
-        if Gau.get_used_quota(False) >= 24:
+        if Gau.get_used_quota(main_account_used) >= 24:
             print("The upload quota has been reached, please try later")
             break
 
@@ -36,3 +36,7 @@ def upload_picture_on_account_using_api(main_account_used=False):
         if error_count > 10:
             print("Tried 10 times, I give up")
             break
+
+
+if __name__ == "__main__":
+    upload_picture_on_account_using_api(True)

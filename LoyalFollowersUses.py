@@ -6,9 +6,11 @@ from pathlib import Path
 import sys
 import random
 import os
+import time
 
 
 def login_local(user):
+    time.sleep(3600 * random.random())
     params = Cfg.get_parameters("test")
     if user == "basic_bot":
         USERNAME = params['userrc']
@@ -16,6 +18,15 @@ def login_local(user):
     elif user == "nusuntbot":
         USERNAME = params['usernsb']
         PASSWORD = params['passnsb']
+    elif user == "sunsetbob":
+        USERNAME = params['usersb']
+        PASSWORD = params['passsb']
+    elif user == "catsfromnet":
+        USERNAME = params['usercfn']
+        PASSWORD = params['passcfn']
+    elif user == "treesdenmark":
+        USERNAME = params['usertdk']
+        PASSWORD = params['passtdk']
     else:
         USERNAME = params['userlp']
         PASSWORD = params['passlp']
@@ -89,6 +100,7 @@ def upload_photo(user, folder):
             # usertags = [Usertag(user=adw0rd, x=0.5, y=0.5)],
             # location = Location(name='Russia, Saint-Petersburg', lat=59.96, lng=30.29)
         )
+        os.remove(image_location)
     except:
         print("Something was not right")
 

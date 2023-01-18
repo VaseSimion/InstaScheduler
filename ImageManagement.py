@@ -62,8 +62,8 @@ def generate_image_caption(image_path):
 
     nostalgia = [" We can't wait to go back there!", "It brings me back!", "Hope we get to revisit soon!"]
 
-    hashtags = "\n\n\n\n#sony #sonyalpha #travel #citybreak #love #instagood #photooftheday #picoftheday" \
-               "#beautiful #happy #cute #photography #nature #instadaily"
+    hashtags = "\n\n\n\n#sony #teampixel #travel #citybreak #love #instagood #photooftheday #picoftheday" \
+               "#beautiful #happy #cute #photography #nature #instadaily @natgeoyourshot #yourshotphotographer @500px @picfair"
 
     location = image_path.split("/")[-2]
     caption = random.choice(sentence_start) + random.choice(adjective).lower() + random.choice(purpose) + \
