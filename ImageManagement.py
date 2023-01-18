@@ -90,7 +90,7 @@ def generate_simp_comment():
 
 
 def get_image_path(parent_folder):
-    print(parent_folder)
+    # print(parent_folder)
     dir_list = os.listdir(parent_folder)
     subfolder = parent_folder + "/" + random.choice(dir_list)
     if len(os.listdir(subfolder)) == 0:

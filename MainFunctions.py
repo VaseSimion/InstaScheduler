@@ -21,7 +21,7 @@ def upload_picture_on_account_using_api(main_account_used=False):
                 os.remove(image_location)
                 image_location = Im.get_image_path(photo_folder)
             link = Im.img_bb_image_upload(image_location)
-            print("Image is here:", link)
+            # print("Image is here:", link)
             caption = Im.generate_image_caption(image_location)
             response = Gau.image_upload(link, caption, main_account=main_account_used)
             response_code = response.status_code
