@@ -10,7 +10,7 @@ def upload_picture_on_account_using_api(main_account_used=False):
     print("\n*******************     New run happened    *******************")
 
     while True:
-        if Gau.get_used_quota(False) >= 24:
+        if Gau.get_used_quota(main_account_used) >= 24:
             print("The upload quota has been reached, please try later")
             break
 
@@ -21,7 +21,7 @@ def upload_picture_on_account_using_api(main_account_used=False):
                 os.remove(image_location)
                 image_location = Im.get_image_path(photo_folder)
             link = Im.img_bb_image_upload(image_location)
-            print("Image is here:", link)
+            # print("Image is here:", link)
             caption = Im.generate_image_caption(image_location)
             response = Gau.image_upload(link, caption, main_account=main_account_used)
             response_code = response.status_code
@@ -36,3 +36,7 @@ def upload_picture_on_account_using_api(main_account_used=False):
         if error_count > 10:
             print("Tried 10 times, I give up")
             break
+
+
+if __name__ == "__main__":
+    upload_picture_on_account_using_api(True)
