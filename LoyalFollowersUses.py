@@ -95,8 +95,7 @@ def upload_photo(user, folder):
 
         cl.photo_upload(
             image_location,
-            "Lovely picture made by " + file_name.split("-")[0].title() + " " + file_name.split("-")[1].title() +
-            ". Interested in improving your photography skill? Check out @simion.vase. #photography, #nature"
+            "Lovely picture made by " + file_name.split("-")[0].title() + " " + file_name.split("-")[1].title()
             # usertags = [Usertag(user=adw0rd, x=0.5, y=0.5)],
             # location = Location(name='Russia, Saint-Petersburg', lat=59.96, lng=30.29)
         )

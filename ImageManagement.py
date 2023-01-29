@@ -49,26 +49,29 @@ def generate_image_caption(image_path):
                  "Spectacular ", "Great ", "Fantastic ", "Nice ", "Impressive ", "Fabulous ", "Splendid ",
                  "Captivating ", "Formidable ", "Enchanting "]
 
-    wow_introduction = ["What a ", "Love this ", "Daaaamn, ", "", "", "", "", "", "", "", "", "", ""]
-
-    object = ["image", "photo", "shot", "work", "picture", "frame", "snapshot", "composition", "capture", "scene"]
-
-    congrats = [" Congrats!", " Congratulations!", " Good job!", " Well taken!", "", "", "", "", "", "", "", "", ""]
-
     sentence_start = ["The ", "Looking back at the ", "Remembering the ", "This picture reminds me of the ",
-                      "We took some great pictures back in the ", "Thinking of the ", "It was one "]
+                      "We took some great pictures back in the ", "Thinking of the ", "It was one ",
+                      "It's been a while since our ", ]
 
     purpose = ["trip", "holiday", "excursion", "adventure", "vist"]
 
-    nostalgia = [" We can't wait to go back there!", "It brings me back!", "Hope we get to revisit soon!"]
+    nostalgia = [" We can't wait to go back there!", " It brings me back!", " Hope we get to revisit soon!"]
 
     hashtags = "\n\n\n\n#sony #teampixel #travel #citybreak #love #instagood #photooftheday #picoftheday" \
                "#beautiful #happy #cute #photography #nature #instadaily @natgeoyourshot #yourshotphotographer @500px @picfair"
 
+    something_nice_about_a_place = [", you have our heart", ", you were amazing", ", the place of our grand adventure",
+                                    ", you have exceeded all our expectations", ", we were in awe with your landscapes",
+                                    ", you have me hooked on your history", ", you are truly a wonder",
+                                    ", you left us speechless", ", you have me hooked on your history",
+                                    ", adventure at it's finest", ", you have us under your spell"]
+
     location = image_path.split("/")[-2]
-    caption = random.choice(sentence_start) + random.choice(adjective).lower() + random.choice(purpose) + \
-              " we had in " + location + ".... " + random.choice(nostalgia) + hashtags
-    return caption
+    caption_one = random.choice(sentence_start) + random.choice(adjective).lower() + random.choice(purpose) + \
+              " we had in " + location + ".... " + random.choice(nostalgia) + hashtags + " #"+location
+
+    caption_two = location.title() + random.choice(something_nice_about_a_place) + hashtags + " #"+location
+    return random.choice([caption_two, caption_one])
 
 
 def generate_simp_comment():
