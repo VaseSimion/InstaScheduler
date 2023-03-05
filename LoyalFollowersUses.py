@@ -104,5 +104,21 @@ def upload_photo(user, folder):
         print("Something was not right")
 
 
+def simp_specific_user(user, targeted_user):
+    comment_text = Im.generate_simp_comment(targeted_user)
+    cl = login_local(user)
+    target_info = cl.user_info_by_username(targeted_user).dict()
+    try:
+        for element in cl.user_medias(target_info['pk'], amount=1):
+            id_last_post = element.dict()['id']
+            # print(id_last_post)
+            comment = cl.media_comment(id_last_post, comment_text)
+            # print(comment.dict())
+            cl.media_like(media_id=id_last_post)
+        print("Comment succesfuly uploaded, from", user)
+    except:
+        print("Some error happened!", user)
+
+
 if __name__ == "__main__":
     pass

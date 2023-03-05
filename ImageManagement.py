@@ -26,8 +26,8 @@ def manage_image_size(image_location):
     original_image = Image.open(image_location)
     width, height = original_image.size
     if image_size > 6000000:
-        resize_factor = math.sqrt(6000000/image_size)
-        new_image = original_image.resize((int(width*resize_factor), int(height*resize_factor)))
+        resize_factor = math.sqrt(6000000 / image_size)
+        new_image = original_image.resize((int(width * resize_factor), int(height * resize_factor)))
         new_image.save(image_location)
         print("Image has been resized")
     else:
@@ -37,7 +37,7 @@ def manage_image_size(image_location):
 def check_if_valid_ratio(image_location):
     original_image = Image.open(image_location)
     width, height = original_image.size
-    if (0.8 < (height/width) < 1.91) or (0.8 < (width/height) < 1.91):
+    if (0.8 < (height / width) < 1.91) or (0.8 < (width / height) < 1.91):
         return True
     else:
         print("Image had ratios too off ", image_location)
@@ -68,13 +68,13 @@ def generate_image_caption(image_path):
 
     location = image_path.split("/")[-2]
     caption_one = random.choice(sentence_start) + random.choice(adjective).lower() + random.choice(purpose) + \
-              " we had in " + location + ".... " + random.choice(nostalgia) + hashtags + " #"+location
+                  " we had in " + location + ".... " + random.choice(nostalgia) + hashtags + " #" + location
 
-    caption_two = location.title() + random.choice(something_nice_about_a_place) + hashtags + " #"+location
+    caption_two = location.title() + random.choice(something_nice_about_a_place) + hashtags + " #" + location
     return random.choice([caption_two, caption_one])
 
 
-def generate_simp_comment():
+def generate_simp_comment(name="Simion"):
     adjective = ["Awesome ", "Amazing ", "Excellent ", "Stunning ", "Cool ", "Lovely ", "Wonderful ", "Superb ",
                  "Spectacular ", "Great ", "Fantastic ", "Nice ", "Impressive ", "Fabulous ", "Splendid ",
                  "Captivating ", "Formidable ", "Enchanting "]
@@ -86,8 +86,8 @@ def generate_simp_comment():
     congrats = [" Congrats!", " Congratulations!", " Good job!", " Well taken!", "Love you!", "", "", "", "", "", "",
                 "", ""]
 
-    caption = random.choice(wow_introduction) + random.choice(adjective) + random.choice(objective).lower() + \
-              ", Simion!" + random.choice(congrats)
+    caption = random.choice(wow_introduction) + random.choice(adjective) + random.choice(objective).lower() + ", " + \
+              name + "!" + random.choice(congrats)
 
     return caption
 
@@ -105,4 +105,3 @@ def get_image_path(parent_folder):
 
 if __name__ == "__main__":
     print(generate_simp_comment())
-
