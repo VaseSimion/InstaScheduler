@@ -21,6 +21,9 @@ def login_local(user):
     elif user == "sunsetbob":
         USERNAME = params['usersb']
         PASSWORD = params['passsb']
+    elif user == "fete":
+        USERNAME = params['userfr']
+        PASSWORD = params['passfr']
     elif user == "catsfromnet":
         USERNAME = params['usercfn']
         PASSWORD = params['passcfn']
@@ -78,7 +81,7 @@ def upload_story(user):
             cl.photo_upload_to_story(
                 image_location,
                 "Just using this with the Instagrapi",
-                mentions=[StoryMention(user=notabot, x=0.49892962, y=0.703125, width=0.8333333333333334, height=0.125)],
+                #mentions=[StoryMention(user=notabot, x=0.49892962, y=0.703125, width=0.8333333333333334, height=0.125)],
                 links=[StoryLink(webUri='https://www.youtube.com/watch?v=CQRy_ygDF4o&list=RDtYdbcwTb8Es&index=13')]
                 #hashtags=[StoryHashtag(hashtag="#Boss", x=0.23, y=0.32, width=0.5, height=0.22)]
             )
@@ -93,12 +96,18 @@ def upload_photo(user, folder):
         file_name = random.choice(os.listdir(subfolder))
         image_location = subfolder + "/" + file_name
 
-        cl.photo_upload(
-            image_location,
-            "Lovely picture made by " + file_name.split("-")[0].title() + " " + file_name.split("-")[1].title()
-            # usertags = [Usertag(user=adw0rd, x=0.5, y=0.5)],
-            # location = Location(name='Russia, Saint-Petersburg', lat=59.96, lng=30.29)
-        )
+        if user == "fete":
+            cl.photo_upload(
+                image_location,
+                Im.generate_ai_portrait_text()
+            )
+        else:
+            cl.photo_upload(
+                image_location,
+                "Lovely picture made by " + file_name.split("-")[0].title() + " " + file_name.split("-")[1].title()
+                # usertags = [Usertag(user=adw0rd, x=0.5, y=0.5)],
+                # location = Location(name='Russia, Saint-Petersburg', lat=59.96, lng=30.29)
+            )
         os.remove(image_location)
     except:
         print("Something was not right")

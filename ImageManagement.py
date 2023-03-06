@@ -92,6 +92,18 @@ def generate_simp_comment(name="Simion"):
     return caption
 
 
+def generate_ai_portrait_text():
+    orase_cu_ai = ["Alba Iulia", "Braila", "Aiud", "Craiova", "Baia Mare", "Gataia", "Mihailesti", "Valea lui Mihai",
+                   "Strehaia", "Sinaia", "Sangeorz-Bai", "Podu Iloaoiei", "Bailesti", "Baile Tusnad", "Baile Olanesti",
+                   "Baile Herculane", "Baile Govora", "Baia Sprie", "Baia Aries", "Baia de Arama"]
+
+    hashtags = "\n\n\n\n#sony #teampixel #travel #citybreak #love #instagood #photooftheday #picoftheday" \
+               "#beautiful #happy #cute #photography #nature #instadaily @natgeoyourshot #yourshotphotographer @500px @picfair"
+
+    caption = "Portret in " + random.choice(orase_cu_ai) + "             " + hashtags
+    return caption
+
+
 def get_image_path(parent_folder):
     # print(parent_folder)
     dir_list = os.listdir(parent_folder)
