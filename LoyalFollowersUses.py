@@ -9,8 +9,10 @@ import os
 import time
 
 
-def login_local(user):
-    time.sleep(3600 * random.random())
+def login_local(user, enable_delay=True):
+    if enable_delay:
+        time.sleep(3600 * random.random())
+
     params = Cfg.get_parameters("test")
     if user == "basic_bot":
         USERNAME = params['userrc']
@@ -129,5 +131,24 @@ def simp_specific_user(user, targeted_user):
         print("Some error happened!", user)
 
 
+def bomb_someone(targeted_user, comment_text):
+    list_of_followers = ["basic_bot", "nusuntbot", "catsfromnet", "treesdenmark", "lingeriepro"]
+    for user in list_of_followers:
+        cl = login_local(user, enable_delay=False)
+        target_info = cl.user_info_by_username(targeted_user).dict()
+        try:
+            for element in cl.user_medias(target_info['pk'], amount=1):
+                id_last_post = element.dict()['id']
+                print(id_last_post)
+                comment = cl.media_comment(id_last_post, comment_text)
+                print(comment)
+                cl.media_like(media_id=id_last_post)
+            print("Comment succesfuly uploaded, from", user)
+        except:
+            print("Some error happened!", user)
+        time.sleep(1)
+
+
 if __name__ == "__main__":
+    bomb_someone("nsuntbot", "Review bombing test")
     pass
