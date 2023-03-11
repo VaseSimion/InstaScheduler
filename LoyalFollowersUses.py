@@ -44,7 +44,7 @@ def login_local(user, enable_delay=True):
         pass
 
     cl.login(USERNAME, PASSWORD)
-    cl.dump_settings(Path("/home/vase/TheInstaScript/InstaScheduler/Logins/" + user + ".json"))
+    cl.dump_settings(Path("Logins/" + user + ".json"))
     return cl
 
 
@@ -149,6 +149,20 @@ def bomb_someone(targeted_user, comment_text):
         time.sleep(1)
 
 
+def mass_follow_someone(targeted_user):
+    list_of_followers = ["basic_bot", "nusuntbot", "catsfromnet", "treesdenmark", "lingeriepro", "sunsetbob"]
+    for user in list_of_followers:
+        cl = login_local(user, enable_delay=False)
+        target_info = cl.user_info_by_username(targeted_user).dict()
+        try:
+            cl.user_follow(target_info['pk'])
+            print("Dude followed by", user)
+        except:
+            print("Some error happened!", user)
+        time.sleep(1)
+
+
 if __name__ == "__main__":
-    bomb_someone("nsuntbot", "Review bombing test")
+    options_for_comments = ["Bellissima", "Hot", "<3<3<3", "Good one!", "Whow is sse?"]
+    bomb_someone("nsuntbot", random.choice(options_for_comments))
     pass
