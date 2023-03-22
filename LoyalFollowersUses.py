@@ -71,21 +71,19 @@ def simp_main_account(user, target):
         print("Some error happened!", user)
 
 
-def upload_story(user):
+def upload_story(user, folder):
     cl = login_local(user)
     try:
-        notabot = cl.user_info_by_username('simion.vase')
-        print(notabot)
-        photo_folder = Cfg.get_parameters()['photo_folder']
-        image_location = Im.get_image_path(photo_folder)
+        subfolder = "/home/vase/Pictures/" + folder
+        file_name = random.choice(os.listdir(subfolder))
+        image_location = subfolder + "/" + file_name
+
         post_story = True
         if post_story:
             cl.photo_upload_to_story(
                 image_location,
-                "Just using this with the Instagrapi",
-                #mentions=[StoryMention(user=notabot, x=0.49892962, y=0.703125, width=0.8333333333333334, height=0.125)],
+                "Wanna see more?",
                 links=[StoryLink(webUri='https://www.youtube.com/watch?v=CQRy_ygDF4o&list=RDtYdbcwTb8Es&index=13')]
-                #hashtags=[StoryHashtag(hashtag="#Boss", x=0.23, y=0.32, width=0.5, height=0.22)]
             )
     except:
         print("Something was not right")
