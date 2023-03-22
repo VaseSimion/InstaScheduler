@@ -9,7 +9,8 @@ import openai
 
 
 def use_open_ai_for_caption(prompt):
-    openai.api_key = "API KEY"
+    params = Cfg.get_parameters("test")
+    openai.api_key = params['openai_key']
     prompts = [{"role": "system",
                 "content": 'You create instagram picture description. The descriptions are very short and generic while using good words for SEO. You also add hashtags to make the picture popular'},
                {"role": "user", "content": prompt}]
