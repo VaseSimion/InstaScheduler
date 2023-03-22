@@ -5,6 +5,21 @@ import os
 import random
 from PIL import Image
 import math
+import openai
+
+
+def use_open_ai_for_caption(prompt):
+    openai.api_key = "API KEY"
+    prompts = [{"role": "system",
+                "content": 'You create instagram picture description. The descriptions are very short and generic while using good words for SEO. You also add hashtags to make the picture popular'},
+               {"role": "user", "content": prompt}]
+
+    response = openai.ChatCompletion.create(
+        model="gpt-3.5-turbo",
+        messages=prompts,
+    ).choices[0].message.content
+
+    return response
 
 
 def img_bb_image_upload(image_path):
@@ -45,51 +60,15 @@ def check_if_valid_ratio(image_location):
 
 
 def generate_image_caption(image_path):
-    adjective = ["Awesome ", "Amazing ", "Excellent ", "Stunning ", "Cool ", "Lovely ", "Wonderful ", "Superb ",
-                 "Spectacular ", "Great ", "Fantastic ", "Nice ", "Impressive ", "Fabulous ", "Splendid ",
-                 "Captivating ", "Formidable ", "Enchanting "]
-
-    sentence_start = ["The ", "Looking back at the ", "Remembering the ", "This picture reminds me of the ",
-                      "We took some great pictures back in the ", "Thinking of the ", "It was one ",
-                      "It's been a while since our ", ]
-
-    purpose = ["trip", "holiday", "excursion", "adventure", "vist"]
-
-    nostalgia = [" We can't wait to go back there!", " It brings me back!", " Hope we get to revisit soon!"]
-
-    hashtags = "\n\n\n\n#sony #teampixel #travel #citybreak #love #instagood #photooftheday #picoftheday" \
-               "#beautiful #happy #cute #photography #nature #instadaily @natgeoyourshot #yourshotphotographer @500px @picfair"
-
-    something_nice_about_a_place = [", you have our heart", ", you were amazing", ", the place of our grand adventure",
-                                    ", you have exceeded all our expectations", ", we were in awe with your landscapes",
-                                    ", you have me hooked on your history", ", you are truly a wonder",
-                                    ", you left us speechless", ", you have me hooked on your history",
-                                    ", adventure at it's finest", ", you have us under your spell"]
-
     location = image_path.split("/")[-2]
-    caption_one = random.choice(sentence_start) + random.choice(adjective).lower() + random.choice(purpose) + \
-                  " we had in " + location + ".... " + random.choice(nostalgia) + hashtags + " #" + location
-
-    caption_two = location.title() + random.choice(something_nice_about_a_place) + hashtags + " #" + location
-    return random.choice([caption_two, caption_one])
+    text_user = "Create a description for a picture take in " + location + \
+                ", be generic, end with a question to gain interactions"
+    return use_open_ai_for_caption(text_user)
 
 
 def generate_simp_comment(name="Simion"):
-    adjective = ["Awesome ", "Amazing ", "Excellent ", "Stunning ", "Cool ", "Lovely ", "Wonderful ", "Superb ",
-                 "Spectacular ", "Great ", "Fantastic ", "Nice ", "Impressive ", "Fabulous ", "Splendid ",
-                 "Captivating ", "Formidable ", "Enchanting "]
-
-    wow_introduction = ["What a ", "Love this ", "Daaaamn, ", "", "", "", "", "", "", "", "", "", ""]
-
-    objective = ["image", "photo", "shot", "work", "picture", "frame", "snapshot", "composition", "capture", "scene"]
-
-    congrats = [" Congrats!", " Congratulations!", " Good job!", " Well taken!", "Love you!", "", "", "", "", "", "",
-                "", ""]
-
-    caption = random.choice(wow_introduction) + random.choice(adjective) + random.choice(objective).lower() + ", " + \
-              name + "!" + random.choice(congrats)
-
-    return caption
+    text_user = "Create a praise for this picture taken by " + name
+    return use_open_ai_for_caption(text_user)
 
 
 def generate_ai_portrait_text():
@@ -97,11 +76,9 @@ def generate_ai_portrait_text():
                    "Strehaia", "Sinaia", "Sangeorz-Bai", "Podu Iloaoiei", "Bailesti", "Baile Tusnad", "Baile Olanesti",
                    "Baile Herculane", "Baile Govora", "Baia Sprie", "Baia Aries", "Baia de Arama"]
 
-    hashtags = "\n\n\n\n#sony #teampixel #travel #citybreak #love #instagood #photooftheday #picoftheday" \
-               "#beautiful #happy #cute #photography #nature #instadaily @natgeoyourshot #yourshotphotographer @500px @picfair"
-
-    caption = "Portret in " + random.choice(orase_cu_ai) + "             " + hashtags
-    return caption
+    text_user = "Create a description, in Romanian, for a portrait take in " + random.choice(orase_cu_ai) + \
+                ", be generic, end with a question to gain interactions"
+    return use_open_ai_for_caption(text_user)
 
 
 def get_image_path(parent_folder):
@@ -117,3 +94,6 @@ def get_image_path(parent_folder):
 
 if __name__ == "__main__":
     print(generate_simp_comment())
+    print(generate_image_caption("Instagram/Peru/Dsc.jpg"))
+    print(generate_ai_portrait_text())
+

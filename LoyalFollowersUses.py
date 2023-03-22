@@ -44,7 +44,7 @@ def login_local(user, enable_delay=True):
         pass
 
     cl.login(USERNAME, PASSWORD)
-    cl.dump_settings(Path("Logins/" + user + ".json"))
+    cl.dump_settings(Path("/home/vase/TheInstaScript/InstaScheduler/Logins/" + user + ".json"))
     return cl
 
 
@@ -131,17 +131,15 @@ def simp_specific_user(user, targeted_user):
         print("Some error happened!", user)
 
 
-def bomb_someone(targeted_user, comment_text):
-    list_of_followers = ["basic_bot", "nusuntbot", "catsfromnet", "treesdenmark", "lingeriepro"]
+def bomb_someone(targeted_user, comment_text_list):
+    list_of_followers = ["basic_bot", "nusuntbot", "catsfromnet", "treesdenmark", "lingeriepro", "sunsetbob"]
     for user in list_of_followers:
         cl = login_local(user, enable_delay=False)
         target_info = cl.user_info_by_username(targeted_user).dict()
         try:
             for element in cl.user_medias(target_info['pk'], amount=1):
                 id_last_post = element.dict()['id']
-                print(id_last_post)
-                comment = cl.media_comment(id_last_post, comment_text)
-                print(comment)
+                comment = cl.media_comment(id_last_post, random.choice(comment_text_list))
                 cl.media_like(media_id=id_last_post)
             print("Comment succesfuly uploaded, from", user)
         except:
@@ -164,5 +162,5 @@ def mass_follow_someone(targeted_user):
 
 if __name__ == "__main__":
     options_for_comments = ["Bellissima", "Hot", "<3<3<3", "Good one!", "Whow is sse?"]
-    bomb_someone("nsuntbot", random.choice(options_for_comments))
+    bomb_someone("nsuntbot", options_for_comments)
     pass
