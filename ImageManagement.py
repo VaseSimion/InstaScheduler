@@ -12,14 +12,25 @@ def use_open_ai_for_caption(prompt):
     params = Cfg.get_parameters("test")
     openai.api_key = params['openai_key']
     prompts = [{"role": "system",
-                "content": 'You create instagram picture description. The descriptions are very short and generic while using good words for SEO. You also add hashtags to make the picture popular'},
+                "content": 'You create instagram picture description. The descriptions are very short and generic while using good words for SEO. You also add hashtags to make the picture popular. Do not use quotes'},
                {"role": "user", "content": prompt}]
-
     response = openai.ChatCompletion.create(
         model="gpt-3.5-turbo",
         messages=prompts,
     ).choices[0].message.content
+    return response
 
+
+def use_open_ai_for_commenting(prompt):
+    params = Cfg.get_parameters("test")
+    openai.api_key = params['openai_key']
+    prompts = [{"role": "system",
+                "content": 'You write comments to a specific user on instagram, you are very short and generic while using good words for SEO. You add emojys. Do not use quotes'},
+               {"role": "user", "content": prompt}]
+    response = openai.ChatCompletion.create(
+        model="gpt-3.5-turbo",
+        messages=prompts,
+    ).choices[0].message.content
     return response
 
 
@@ -63,13 +74,15 @@ def check_if_valid_ratio(image_location):
 def generate_image_caption(image_path):
     location = image_path.split("/")[-2]
     text_user = "Create a description for a picture take in " + location + \
-                ", be generic, end with a question to gain interactions"
-    return use_open_ai_for_caption(text_user)
+                ", be generic, end with a question to gain interactions. Do not use quotes"
+    response = use_open_ai_for_caption(text_user)
+    return response
 
 
-def generate_simp_comment(name="Simion"):
-    text_user = "Create a praise for this picture taken by " + name
-    return use_open_ai_for_caption(text_user)
+def generate_simp_comment(name="Simion", content="landscape"):
+    text_user = "Create a praise for this picture taken by " + name + ", the picture is of a " + content
+    response = use_open_ai_for_commenting(text_user)
+    return response
 
 
 def generate_ai_portrait_text():
@@ -79,7 +92,8 @@ def generate_ai_portrait_text():
 
     text_user = "Create a description, in Romanian, for a portrait take in " + random.choice(orase_cu_ai) + \
                 ", be generic, end with a question to gain interactions"
-    return use_open_ai_for_caption(text_user)
+    response = use_open_ai_for_caption(text_user)
+    return response
 
 
 def get_image_path(parent_folder):
@@ -94,7 +108,7 @@ def get_image_path(parent_folder):
 
 
 if __name__ == "__main__":
-    print(generate_simp_comment())
+    print(generate_simp_comment("@vase.simion", "landscape"))
     print(generate_image_caption("Instagram/Peru/Dsc.jpg"))
     print(generate_ai_portrait_text())
 

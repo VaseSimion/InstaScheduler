@@ -129,7 +129,7 @@ def simp_specific_user(user, targeted_user):
         print("Some error happened!", user)
 
 
-def bomb_someone(targeted_user, comment_text_list):
+def bomb_someone(targeted_user, content):
     list_of_followers = ["basic_bot", "nusuntbot", "catsfromnet", "treesdenmark", "lingeriepro", "sunsetbob"]
     for user in list_of_followers:
         cl = login_local(user, enable_delay=False)
@@ -137,7 +137,8 @@ def bomb_someone(targeted_user, comment_text_list):
         try:
             for element in cl.user_medias(target_info['pk'], amount=1):
                 id_last_post = element.dict()['id']
-                comment = cl.media_comment(id_last_post, random.choice(comment_text_list))
+                comment_text = Im.generate_simp_comment(targeted_user, content)
+                comment = cl.media_comment(id_last_post, comment_text)
                 cl.media_like(media_id=id_last_post)
             print("Comment succesfuly uploaded, from", user)
         except:
@@ -159,6 +160,5 @@ def mass_follow_someone(targeted_user):
 
 
 if __name__ == "__main__":
-    options_for_comments = ["Bellissima", "Hot", "<3<3<3", "Good one!", "Whow is sse?"]
-    bomb_someone("nsuntbot", options_for_comments)
+    bomb_someone("nsuntbot", "portrait")
     pass
