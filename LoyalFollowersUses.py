@@ -1,9 +1,8 @@
 from instagrapi import Client
-from instagrapi.types import StoryMention, StoryMedia, StoryLink, StoryHashtag
+from instagrapi.types import StoryLink
 import ImageManagement as Im
 import Config as Cfg
 from pathlib import Path
-import sys
 import random
 import os
 import time
@@ -49,7 +48,7 @@ def login_local(user, enable_delay=True):
 
 
 def simp_main_account(user, target):
-    comment_text = Im.generate_simp_comment()
+    comment_text = Im.generate_simp_comment("@vase.simion")
     cl = login_local(user)
     try:
         if target == "main":
@@ -67,8 +66,8 @@ def simp_main_account(user, target):
                 # print(comment.dict())
                 cl.media_like(media_id=id_last_post)
         print("Comment succesfuly uploaded, from", user)
-    except:
-        print("Some error happened!", user)
+    except Exception as error:
+        print("An exception occurred:", error, user)
 
 
 def upload_story(user, folder):
@@ -85,8 +84,8 @@ def upload_story(user, folder):
                 "Wanna see more?",
                 links=[StoryLink(webUri='https://www.youtube.com/watch?v=CQRy_ygDF4o&list=RDtYdbcwTb8Es&index=13')]
             )
-    except:
-        print("Something was not right")
+    except Exception as error:
+        print("An exception occurred:", error, user)
 
 
 def upload_photo(user, folder):
@@ -109,24 +108,22 @@ def upload_photo(user, folder):
                 # location = Location(name='Russia, Saint-Petersburg', lat=59.96, lng=30.29)
             )
         os.remove(image_location)
-    except:
-        print("Something was not right")
+    except Exception as error:
+        print("An exception occurred:", error, user)
 
 
 def simp_specific_user(user, targeted_user):
     comment_text = Im.generate_simp_comment(targeted_user)
-    cl = login_local(user)
+    cl = login_local(user, enable_delay=False)
     target_info = cl.user_info_by_username(targeted_user).dict()
     try:
         for element in cl.user_medias(target_info['pk'], amount=1):
             id_last_post = element.dict()['id']
-            # print(id_last_post)
-            comment = cl.media_comment(id_last_post, comment_text)
-            # print(comment.dict())
+            cl.media_comment(id_last_post, comment_text)
             cl.media_like(media_id=id_last_post)
         print("Comment succesfuly uploaded, from", user)
-    except:
-        print("Some error happened!", user)
+    except Exception as error:
+        print("An exception occurred:", error, user)
 
 
 def bomb_someone(targeted_user, content):
@@ -137,12 +134,12 @@ def bomb_someone(targeted_user, content):
         try:
             for element in cl.user_medias(target_info['pk'], amount=1):
                 id_last_post = element.dict()['id']
-                comment_text = Im.generate_simp_comment(targeted_user, content)
+                comment_text = Im.generate_simp_comment("@" + targeted_user, content)
                 comment = cl.media_comment(id_last_post, comment_text)
                 cl.media_like(media_id=id_last_post)
             print("Comment succesfuly uploaded, from", user)
-        except:
-            print("Some error happened!", user)
+        except Exception as error:
+            print("An exception occurred:", error, user)
         time.sleep(1)
 
 
@@ -154,9 +151,9 @@ def mass_follow_someone(targeted_user):
         try:
             cl.user_follow(target_info['pk'])
             print("Dude followed by", user)
-        except:
-            print("Some error happened!", user)
-        time.sleep(1)
+        except Exception as error:
+            print("An exception occurred:", error, user)
+    time.sleep(1)
 
 
 if __name__ == "__main__":

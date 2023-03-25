@@ -80,7 +80,10 @@ def generate_image_caption(image_path):
 
 
 def generate_simp_comment(name="Simion", content="landscape"):
-    text_user = "Create a praise for this picture taken by " + name + ", the picture is of a " + content
+    if random.random() > 0.1:
+        text_user = "Create a praise for this picture taken by " + name + ", the picture is of a " + content
+    else:
+        text_user = "Create a critique for this picture taken by " + name + ", the picture is of a " + content
     response = use_open_ai_for_commenting(text_user)
     return response
 
