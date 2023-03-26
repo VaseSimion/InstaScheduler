@@ -6,6 +6,7 @@ from pathlib import Path
 import random
 import os
 import time
+import platform
 
 
 def login_local(user, enable_delay=True):
@@ -37,14 +38,23 @@ def login_local(user, enable_delay=True):
 
     cl = Client()
 
-    try:
-        cl.load_settings(Path("/home/vase/TheInstaScript/InstaScheduler/Logins/" + user + ".json"))
-    except:
-        pass
+    if platform.system() == "Windows":
+        try:
+            cl.load_settings(Path("Logins/" + user + ".json"))
+        except:
+            pass
+        cl.login(USERNAME, PASSWORD)
+        cl.dump_settings(Path("Logins/" + user + ".json"))
+        return cl
+    else:
+        try:
+            cl.load_settings(Path("/home/vase/TheInstaScript/InstaScheduler/Logins/" + user + ".json"))
+        except:
+            pass
 
-    cl.login(USERNAME, PASSWORD)
-    cl.dump_settings(Path("/home/vase/TheInstaScript/InstaScheduler/Logins/" + user + ".json"))
-    return cl
+        cl.login(USERNAME, PASSWORD)
+        cl.dump_settings(Path("/home/vase/TheInstaScript/InstaScheduler/Logins/" + user + ".json"))
+        return cl
 
 
 def simp_main_account(user, target):
@@ -112,24 +122,31 @@ def upload_photo(user, folder):
         print("An exception occurred:", error, user)
 
 
-def simp_specific_user(user, targeted_user):
-    comment_text = Im.generate_simp_comment(targeted_user)
+def simp_specific_user(user, targeted_user, photo_content="Landscape"):
+    comment_text = Im.generate_simp_comment(targeted_user, photo_content)
     cl = login_local(user, enable_delay=False)
-    target_info = cl.user_info_by_username(targeted_user).dict()
-    try:
-        for element in cl.user_medias(target_info['pk'], amount=1):
-            id_last_post = element.dict()['id']
-            cl.media_comment(id_last_post, comment_text)
-            cl.media_like(media_id=id_last_post)
-        print("Comment succesfuly uploaded, from", user)
-    except Exception as error:
-        print("An exception occurred:", error, user)
+    if cl.account_info().dict()['username'] == targeted_user:
+        print("Won't simp it's own account")
+        return 0
+    else:
+        target_info = cl.user_info_by_username(targeted_user).dict()
+        try:
+            for element in cl.user_medias(target_info['pk'], amount=1):
+                id_last_post = element.dict()['id']
+                cl.media_comment(id_last_post, comment_text)
+                cl.media_like(media_id=id_last_post)
+            print("Comment succesfuly uploaded, from", user)
+        except Exception as error:
+            print("An exception occurred:", error, user)
 
 
 def bomb_someone(targeted_user, content):
-    list_of_followers = ["basic_bot", "nusuntbot", "catsfromnet", "treesdenmark", "lingeriepro", "sunsetbob"]
+    list_of_followers = ["basic_bot", "nusuntbot", "catsfromnet", "treesdenmark", "lingeriepro", "sunsetbob", "fete"]
     for user in list_of_followers:
         cl = login_local(user, enable_delay=False)
+        if cl.account_info().dict()['username'] == targeted_user:
+            print("Simping only other accounts")
+            continue
         target_info = cl.user_info_by_username(targeted_user).dict()
         try:
             for element in cl.user_medias(target_info['pk'], amount=1):
@@ -144,9 +161,12 @@ def bomb_someone(targeted_user, content):
 
 
 def mass_follow_someone(targeted_user):
-    list_of_followers = ["basic_bot", "nusuntbot", "catsfromnet", "treesdenmark", "lingeriepro", "sunsetbob"]
+    list_of_followers = ["basic_bot", "nusuntbot", "catsfromnet", "treesdenmark", "lingeriepro", "sunsetbob", "fete"]
     for user in list_of_followers:
         cl = login_local(user, enable_delay=False)
+        if cl.account_info().dict()['username'] == targeted_user:
+            print("Simping only other accounts")
+            continue
         target_info = cl.user_info_by_username(targeted_user).dict()
         try:
             cl.user_follow(target_info['pk'])
@@ -157,5 +177,5 @@ def mass_follow_someone(targeted_user):
 
 
 if __name__ == "__main__":
-    bomb_someone("nsuntbot", "portrait")
+    simp_specific_user("basic_bot", "feteromanesti", "Portrait")
     pass
