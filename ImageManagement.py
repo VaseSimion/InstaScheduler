@@ -25,7 +25,7 @@ def use_open_ai_for_commenting(prompt):
     params = Cfg.get_parameters("test")
     openai.api_key = params['openai_key']
     prompts = [{"role": "system",
-                "content": 'You write comments to a specific user on instagram, you are very short and generic while using good words for SEO. You add emojys. Do not use quotes'},
+                "content": 'You write very short comments to a specific user on instagram. You are very short and generic while using good words for SEO. You add emojys. Do not use quotes'},
                {"role": "user", "content": prompt}]
     response = openai.ChatCompletion.create(
         model="gpt-3.5-turbo",
@@ -81,9 +81,9 @@ def generate_image_caption(image_path):
 
 def generate_simp_comment(name="Simion", content="landscape"):
     if random.random() > 0.1:
-        text_user = "Create a praise for this picture taken by " + name + ", the picture is of a " + content
+        text_user = "Create a short praise for this picture taken by " + name + ", the picture is of a " + content
     else:
-        text_user = "Create a critique for this picture taken by " + name + ", the picture is of a " + content
+        text_user = "Create a short critique for this picture taken by " + name + ", the picture is of a " + content
     response = use_open_ai_for_commenting(text_user)
     return response
 
@@ -93,7 +93,7 @@ def generate_ai_portrait_text():
                    "Strehaia", "Sinaia", "Sangeorz-Bai", "Podu Iloaoiei", "Bailesti", "Baile Tusnad", "Baile Olanesti",
                    "Baile Herculane", "Baile Govora", "Baia Sprie", "Baia Aries", "Baia de Arama"]
 
-    text_user = "Create a description, in Romanian, for a portrait take in " + random.choice(orase_cu_ai) + \
+    text_user = "Create a description, for a portrait take in " + random.choice(orase_cu_ai) + \
                 ", be generic, end with a question to gain interactions"
     response = use_open_ai_for_caption(text_user)
     return response
