@@ -1,5 +1,5 @@
 from instagrapi import Client
-from instagrapi.types import StoryLink
+from instagrapi.types import StoryLink, Location
 import ImageManagement as Im
 import Config as Cfg
 from pathlib import Path
@@ -7,6 +7,7 @@ import random
 import os
 import time
 import platform
+from geopy.geocoders import Nominatim
 
 
 def login_local(user, enable_delay=True):
@@ -103,15 +104,18 @@ def upload_story(user, folder):
 
 def upload_photo(user, folder):
     cl = login_local(user)
+    geolocator = Nominatim(user_agent="MyApp")
     try:
         subfolder = "/home/vase/Pictures/" + folder
         file_name = random.choice(os.listdir(subfolder))
         image_location = subfolder + "/" + file_name
-
+        caption_text, location = Im.generate_ai_portrait_text(user)
+        coordinates = geolocator.geocode(location)
         if user == "fete" or user == "guys":
             cl.photo_upload(
                 image_location,
-                Im.generate_ai_portrait_text(user)
+                caption_text,
+                location=Location(name=location, lat=coordinates.latitude, lng=coordinates.longitude)
             )
         else:
             cl.photo_upload(
