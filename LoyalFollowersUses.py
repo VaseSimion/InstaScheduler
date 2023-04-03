@@ -32,6 +32,9 @@ def login_local(user, enable_delay=True):
     elif user == "treesdenmark":
         USERNAME = params['usertdk']
         PASSWORD = params['passtdk']
+    elif user == "guys":
+        USERNAME = params['usergm']
+        PASSWORD = params['passgm']
     else:
         USERNAME = params['userlp']
         PASSWORD = params['passlp']
@@ -105,10 +108,10 @@ def upload_photo(user, folder):
         file_name = random.choice(os.listdir(subfolder))
         image_location = subfolder + "/" + file_name
 
-        if user == "fete":
+        if user == "fete" or user == "guys":
             cl.photo_upload(
                 image_location,
-                Im.generate_ai_portrait_text()
+                Im.generate_ai_portrait_text(user)
             )
         else:
             cl.photo_upload(
