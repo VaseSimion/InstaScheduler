@@ -110,7 +110,7 @@ def generate_ai_portrait_text(user):
     else:
         try:
             cities = ["Germany, Berlin", "France, Paris", "Spain, Madrid", "Romania, Bucharest", "Bulgaria, Sofia",
-                      "Denamrk, Copenhagen", "Sweden, Stockholm", "Netherlands, Amsterdam"]
+                      "Denmark, Copenhagen", "Sweden, Stockholm", "Netherlands, Amsterdam"]
             location = random.choice(cities)
             text_user = "Create a description, for a portrait of a hot guy in " + location + \
                         ", be generic, end with a question to gain interactions"

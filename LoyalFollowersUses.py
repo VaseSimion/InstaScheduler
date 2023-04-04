@@ -112,11 +112,17 @@ def upload_photo(user, folder):
         caption_text, location = Im.generate_ai_portrait_text(user)
         coordinates = geolocator.geocode(location)
         if user == "fete" or user == "guys":
-            cl.photo_upload(
-                image_location,
-                caption_text,
-                location=Location(name=location, lat=coordinates.latitude, lng=coordinates.longitude)
-            )
+            try:
+                cl.photo_upload(
+                    image_location,
+                    caption_text,
+                    location=Location(name=location, lat=coordinates.latitude, lng=coordinates.longitude)
+                )
+            except Exception as error:
+                cl.photo_upload(
+                    image_location,
+                    caption_text
+                )
         else:
             cl.photo_upload(
                 image_location,
