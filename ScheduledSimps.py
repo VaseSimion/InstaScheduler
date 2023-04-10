@@ -3,6 +3,7 @@ import schedule
 import time
 import LoyalFollowersUses as Lfs
 import sys
+import random
 
 """ The way you call this is: python ./ScheduleSimps.py which_account_is_active at_which_time_to_like_comm Photo_folder
 Arguments:
@@ -18,8 +19,10 @@ Arguments:
 """
 print("Simp", sys.argv[1], "is running")
 
+time.sleep(random.randint(1, 300))
+
 if sys.argv[9] == "True":
-    schedule.every(1).day.at(sys.argv[2]).do(Lfs.simp_main_account, user=sys.argv[1], target="main")
+    schedule.every(2).days.at(sys.argv[2]).do(Lfs.simp_main_account, user=sys.argv[1], target="main")
     schedule.every(int(sys.argv[6])).hours.do(Lfs.simp_specific_user, user=sys.argv[1], targeted_user=sys.argv[7], photo_content=sys.argv[8])
 
 schedule.every(int(sys.argv[4])).hours.do(Lfs.upload_photo, user=sys.argv[1], folder=sys.argv[3])

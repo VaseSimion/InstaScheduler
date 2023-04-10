@@ -133,6 +133,7 @@ def upload_photo(user, folder):
         os.remove(image_location)
     except Exception as error:
         print("An exception occurred:", error, user)
+    print("Photo uploaded")
 
 
 def simp_specific_user(user, targeted_user, photo_content="Landscape"):

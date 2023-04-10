@@ -1,2 +1,2 @@
-import platform
-print(platform.system())
+import random
+print(random.randint(1, 300))
