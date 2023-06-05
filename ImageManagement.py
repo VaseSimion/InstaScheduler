@@ -95,29 +95,16 @@ def generate_simp_comment(name="Simion", content="landscape"):
 
 
 def generate_ai_portrait_text(user):
-    if user == "fete":
-        try:
-            orase_cu_ai = ["Alba Iulia", "Braila", "Aiud", "Craiova", "Baia Mare", "Gataia", "Mihailesti", "Valea lui Mihai",
-                           "Strehaia", "Sinaia", "Sangeorz-Bai", "Podu Iloaoiei", "Bailesti", "Baile Tusnad", "Baile Olanesti",
-                           "Baile Herculane", "Baile Govora", "Baia Sprie", "Baia Aries", "Baia de Arama"]
-            location = "Romania, " + random.choice(orase_cu_ai)
-            text_user = "Create a description, for a portrait took in " + location + \
-                        ", be generic, end with a question to gain interactions"
-            response = use_open_ai_for_caption(text_user)
-        except:
-            response, location = generate_ai_portrait_text_programatically(user)
-        return response, location
-    else:
-        try:
-            cities = ["Germany, Berlin", "France, Paris", "Spain, Madrid", "Romania, Bucharest", "Bulgaria, Sofia",
-                      "Denmark, Copenhagen", "Sweden, Stockholm", "Netherlands, Amsterdam"]
-            location = random.choice(cities)
-            text_user = "Create a description, for a portrait of a hot guy in " + location + \
-                        ", be generic, end with a question to gain interactions"
-            response = use_open_ai_for_caption(text_user)
-        except:
-            response, location = generate_ai_portrait_text_programatically(user)
-        return response, location
+    try:
+        cities = ["Germany, Berlin", "France, Paris", "Spain, Madrid", "Romania, Bucharest", "Bulgaria, Sofia",
+                  "Denmark, Copenhagen", "Sweden, Stockholm", "Netherlands, Amsterdam"]
+        location = random.choice(cities)
+        text_user = "Create a description, for a portrait of a hot guy in " + location + \
+                    ", be generic, end with a question to gain interactions"
+        response = use_open_ai_for_caption(text_user)
+    except:
+        response, location = generate_ai_portrait_text_programatically(user)
+    return response, location
 
 
 def generate_image_caption_programatically(image_path):
@@ -169,15 +156,9 @@ def generate_simp_comment_programatically(name="Simion"):
 
 
 def generate_ai_portrait_text_programatically(user):
-    if user == "fete":
-        orase_cu_ai = ["Alba Iulia", "Braila", "Aiud", "Craiova", "Baia Mare", "Gataia", "Mihailesti", "Valea lui Mihai",
-                       "Strehaia", "Sinaia", "Sangeorz-Bai", "Podu Iloaoiei", "Bailesti", "Baile Tusnad", "Baile Olanesti",
-                       "Baile Herculane", "Baile Govora", "Baia Sprie", "Baia Aries", "Baia de Arama"]
-        location = "Romania," + random.choice(orase_cu_ai)
-    else:
-        orase_cu_ai = ["Germany, Berlin", "France, Paris", "Spain, Madrid", "Romania, Bucharest", "Bulgaria, Sofia",
-                  "Denamrk, Copenhagen", "Sweden, Stockholm", "Netherlands, Amsterdam"]
-        location = random.choice(orase_cu_ai)
+    orase_cu_ai = ["Germany, Berlin", "France, Paris", "Spain, Madrid", "Romania, Bucharest", "Bulgaria, Sofia",
+              "Denamrk, Copenhagen", "Sweden, Stockholm", "Netherlands, Amsterdam"]
+    location = random.choice(orase_cu_ai)
 
     hashtags = "\n\n\n\n#sony #teampixel #travel #citybreak #love #instagood #photooftheday #picoftheday" \
                "#beautiful #happy #cute #photography #nature #instadaily @natgeoyourshot #yourshotphotographer @500px @picfair"
@@ -200,5 +181,5 @@ def get_image_path(parent_folder):
 if __name__ == "__main__":
     print(generate_simp_comment("@vase.simion", "landscape"))
     print(generate_image_caption("Instagram/Peru/Dsc.jpg"))
-    print(generate_ai_portrait_text())
+    print(generate_ai_portrait_text("fete"))
 
