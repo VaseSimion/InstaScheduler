@@ -4,8 +4,8 @@ import Config as Cfg
 import requests
 
 
-def image_upload(image_link, image_caption, main_account=False):
-    if main_account:
+def image_upload(image_link, image_caption, account="main"):
+    if account == "main":
         params = Cfg.get_parameters("main")
     else:
         params = Cfg.get_parameters("test_account")
@@ -30,8 +30,8 @@ def image_upload(image_link, image_caption, main_account=False):
     return response
 
 
-def get_insights(main_account=False):
-    if main_account:
+def get_insights(account="main"):
+    if account == "main":
         params = Cfg.get_parameters("main")
     else:
         params = Cfg.get_parameters("test_account")
@@ -61,8 +61,8 @@ def get_insights(main_account=False):
     return json.loads(data.content)
 
 
-def get_used_quota(main_account=False):
-    if main_account:
+def get_used_quota(account="main"):
+    if account == "main":
         params = Cfg.get_parameters("main")
     else:
         params = Cfg.get_parameters("test_account")
