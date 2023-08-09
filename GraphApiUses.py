@@ -5,10 +5,7 @@ import requests
 
 
 def image_upload(image_link, image_caption, account="main"):
-    if account == "main":
-        params = Cfg.get_parameters("main")
-    else:
-        params = Cfg.get_parameters("test_account")
+    params = Cfg.get_parameters(account)
 
     # Create a container
     upload = dict()
@@ -31,10 +28,8 @@ def image_upload(image_link, image_caption, account="main"):
 
 
 def get_insights(account="main"):
-    if account == "main":
-        params = Cfg.get_parameters("main")
-    else:
-        params = Cfg.get_parameters("test_account")
+    params = Cfg.get_parameters(account)
+
     # Define url
     url = params['endpoint_base'] + params['instagram_account_id'] + "/media"
 
@@ -62,10 +57,8 @@ def get_insights(account="main"):
 
 
 def get_used_quota(account="main"):
-    if account == "main":
-        params = Cfg.get_parameters("main")
-    else:
-        params = Cfg.get_parameters("test_account")
+    params = Cfg.get_parameters(account)
+
     # define url
     url = params['endpoint_base'] + params['instagram_account_id'] + "/" + "content_publishing_limit"
 

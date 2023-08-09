@@ -14,7 +14,7 @@ def upload_picture_on_account_using_api(account="main"):
             print("The upload quota has been reached, please try later")
             break
 
-        photo_folder = Cfg.get_parameters()['photo_folder']
+        photo_folder = Cfg.get_parameters(account)['photo_folder']
         try:
             image_location = Im.get_image_path(photo_folder)
             while not Im.check_if_valid_ratio(image_location):
